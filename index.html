@@ -6,447 +6,450 @@
     <title>AMORE | The Classic Italian Afternoon</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700;900&family=DM+Serif+Display:ital@0;1&family=Fugaz+One&display=swap" rel="stylesheet">
     <style>
         :root {
-            --panna: #FAF6F0;       /* Warm Majolica Cream */
-            --blu-capri: #0B3954;   /* Deep Mediterranean Navy */
-            --limone: #FFD166;      /* Amalfi Lemon Yellow */
-            --bouganville: #EF476F; /* Elrow/Capri Hot Pink */
-            --arancia: #F78C6B;     /* Spritz/Terracotta */
-            --azzurro: #48CAE4;     /* Clear Sea Blue */
+            /* Palette "Nu Genea / Napoli Centrale" Anni '70 */
+            --carta: #F3EFE0;     /* Sfondo crema vintage */
+            --inchiostro: #2A251D; /* Nero morbido/marrone scurissimo */
+            --terracotta: #C64327; /* Rosso mattone bruciato */
+            --senape: #E4A135;     /* Giallo caldo 70s */
+            --ottanio: #24585B;    /* Verde/Blu Mediterraneo profondo */
+            
+            --border-thick: 3px solid var(--inchiostro);
+            --shadow-print: 6px 6px 0px var(--inchiostro);
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
+        
         body { 
-            background: var(--panna); 
-            color: var(--blu-capri); 
-            font-family: 'Syne', sans-serif; 
+            background: var(--carta); 
+            color: var(--inchiostro); 
+            font-family: 'Chivo', sans-serif; 
             line-height: 1.6; 
             overflow-x: hidden; 
-            -webkit-font-smoothing: antialiased; 
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* ── TYPOGRAPHY & UTILS ── */
-        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
-        .italic { font-style: italic; }
+        /* ── EFFETTO GRANA VINILE / CARTA STAMPATA ── */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999; opacity: 0.45;
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)"/%3E%3C/svg%3E');
+        }
+
+        /* ── CORNICE LOCANDINA (Bordo esterno stile poster) ── */
+        .poster-frame {
+            border: var(--border-thick);
+            margin: 15px;
+            position: relative;
+            background: var(--carta);
+            overflow: hidden;
+        }
+        @media (max-width: 768px) { .poster-frame { margin: 8px; } }
+
+        /* ── TYPOGRAPHY ── */
+        h1, h2, h3 { font-family: 'DM Serif Display', serif; font-weight: 400; color: var(--inchiostro); }
+        .funk-font { font-family: 'Fugaz One', cursive; text-transform: uppercase; }
         
-        .pill-tag {
-            background: var(--bouganville); color: var(--panna); 
-            padding: 6px 16px; border-radius: 50px; 
-            font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px;
-            display: inline-block;
-            box-shadow: 3px 3px 0px var(--blu-capri); /* Retro funk shadow */
+        .pill {
+            background: var(--inchiostro); color: var(--carta);
+            padding: 4px 14px; font-weight: 900; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 2px;
+            display: inline-block; border-radius: 50px;
         }
-
-        /* ── MEDITERRANEAN ARCHES ── */
-        .arch-container { border-radius: 200px 200px 0 0; overflow: hidden; }
-        .arch-card { border-radius: 120px 120px 16px 16px; overflow: hidden; }
-
-        /* ── MARQUEE TICKER (FESTIVAL VIBE) ── */
-        .marquee-container {
-            background: var(--blu-capri); color: var(--limone);
-            padding: 12px 0; overflow: hidden; white-space: nowrap;
-            position: relative; z-index: 10;
-            border-top: 2px solid var(--blu-capri);
-            border-bottom: 2px solid var(--blu-capri);
-        }
-        .marquee-content {
-            display: inline-block; font-weight: 800; font-size: 1.1rem;
-            text-transform: uppercase; letter-spacing: 3px;
-            animation: marquee 20s linear infinite;
-        }
-        .marquee-content span { color: var(--bouganville); }
-        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* ── NAV ── */
         nav {
-            position: fixed; top: 0; width: 100%; height: 75px;
-            background: rgba(250, 246, 240, 0.95); backdrop-filter: blur(10px);
+            border-bottom: var(--border-thick);
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; z-index: 1000; transition: all 0.3s ease;
-            border-bottom: 2px solid rgba(11, 57, 84, 0.05);
+            padding: 15px 4%; background: var(--carta);
+            position: relative; z-index: 100;
         }
         .nav-logo {
-            font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--blu-capri);
-            text-decoration: none; font-weight: 900; letter-spacing: 1px;
+            font-family: 'Fugaz One', cursive; font-size: 2rem; color: var(--terracotta);
+            text-decoration: none; text-shadow: 2px 2px 0 var(--inchiostro);
+            letter-spacing: 1px;
         }
-        .nav-logo span { color: var(--arancia); font-style: italic; }
-        .nav-links { display: flex; gap: 32px; }
+        .nav-links { display: flex; gap: 30px; }
         .nav-links a {
-            text-decoration: none; color: var(--blu-capri); font-weight: 700;
+            text-decoration: none; color: var(--inchiostro); font-weight: 900;
             text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;
-            position: relative; transition: color 0.3s;
+            transition: color 0.2s;
         }
-        .nav-links a:hover { color: var(--bouganville); }
+        .nav-links a:hover { color: var(--terracotta); }
 
         /* Mobile Nav */
         .menu-toggle { display: none; background: none; border: none; cursor: pointer; }
-        .menu-toggle div { width: 30px; height: 3px; background: var(--blu-capri); margin: 6px 0; transition: 0.3s; }
+        .menu-toggle div { width: 35px; height: 4px; background: var(--inchiostro); margin: 6px 0; }
 
-        /* ── HERO ── */
+        /* ── TICKER (STILE NASTRO STAMPATO) ── */
+        .ticker {
+            background: var(--terracotta); color: var(--carta);
+            border-bottom: var(--border-thick);
+            padding: 10px 0; overflow: hidden; white-space: nowrap;
+        }
+        .ticker-content {
+            display: inline-block; font-weight: 900; font-size: 1rem;
+            text-transform: uppercase; letter-spacing: 2px;
+            animation: marquee 25s linear infinite;
+        }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* ── HERO SECTION ── */
         .hero {
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--panna) 0%, #FDFBF7 100%);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 120px 5% 60px; position: relative; overflow: hidden;
+            padding: 100px 5%; text-align: center; position: relative;
+            border-bottom: var(--border-thick); overflow: hidden;
+            background: radial-gradient(circle at top right, var(--senape) 0%, var(--carta) 60%);
         }
-        
-        /* Funky 70s Concentric Arch Background */
-        .hero-arch {
-            position: absolute; bottom: 0; width: 100vw; height: 50vh;
-            background: radial-gradient(circle at 50% 100%, 
-                transparent 15%, 
-                var(--limone) 15.5%, var(--limone) 25%, 
-                transparent 25.5%, transparent 35%, 
-                var(--arancia) 35.5%, var(--arancia) 45%, 
-                transparent 45.5%, transparent 55%, 
-                var(--bouganville) 55.5%, var(--bouganville) 65%, 
-                transparent 65.5%);
-            z-index: 1; opacity: 0.25;
+        /* Elemento grafico Sole/Vinile Nu Genea Style */
+        .retro-sun {
+            position: absolute; top: -100px; left: -100px;
+            width: 400px; height: 400px; border-radius: 50%;
+            background: var(--ottanio); border: var(--border-thick);
+            box-shadow: inset 0 0 0 30px var(--carta), inset 0 0 0 33px var(--inchiostro),
+                        inset 0 0 0 60px var(--senape), inset 0 0 0 63px var(--inchiostro),
+                        inset 0 0 0 90px var(--terracotta), inset 0 0 0 93px var(--inchiostro);
+            opacity: 0.8; z-index: 1;
         }
 
-        .hero-content { position: relative; z-index: 2; max-width: 900px; }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
         .hero h1 {
-            font-size: clamp(5rem, 15vw, 11rem); color: var(--blu-capri);
-            line-height: 0.85; margin-bottom: 20px; font-weight: 900;
+            font-size: clamp(4.5rem, 12vw, 10rem); color: var(--inchiostro);
+            line-height: 0.9; margin-bottom: 10px;
         }
+        .hero h1 span { color: var(--terracotta); }
         .hero-sub {
-            font-family: 'Playfair Display', serif; font-style: italic;
-            font-size: clamp(1.5rem, 4vw, 2.5rem); color: var(--arancia);
-            margin-bottom: 40px; display: block;
+            font-family: 'Chivo', sans-serif; font-weight: 900;
+            font-size: clamp(1rem, 3vw, 1.5rem); text-transform: uppercase;
+            letter-spacing: 4px; color: var(--ottanio); margin-bottom: 30px; display: block;
         }
         
-        /* Floating Funk Graphics */
-        .float-graphic { position: absolute; display: flex; align-items: center; justify-content: center; z-index: 3; filter: drop-shadow(4px 4px 0px rgba(11, 57, 84, 0.15)); }
-        .g1 { top: 25%; left: 10%; animation: float 6s ease-in-out infinite; }
-        .g2 { bottom: 15%; right: 12%; animation: spin 10s linear infinite; }
-        .g3 { top: 20%; right: 20%; animation: float 4s ease-in-out infinite 1s; }
-        @keyframes float { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-25px) rotate(10deg); } }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* ── SECTIONS BASE ── */
+        section { padding: 100px 5%; border-bottom: var(--border-thick); position: relative; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: clamp(3rem, 6vw, 4.5rem); color: var(--terracotta); }
+        .section-label { 
+            font-family: 'Fugaz One', cursive; font-size: 1.2rem; 
+            color: var(--ottanio); text-transform: uppercase; 
+            display: block; margin-bottom: 10px;
+        }
 
         /* ── CONCEPT ── */
-        .section-concept {
-            background: var(--blu-capri); color: var(--panna);
-            padding: 120px 5%; text-align: center; position: relative;
+        .concept-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: var(--border-thick); box-shadow: var(--shadow-print); background: var(--carta); max-width: 1100px; margin: 0 auto; }
+        .concept-text { padding: 50px; border-right: var(--border-thick); }
+        .concept-text h3 { font-size: 2.5rem; margin-bottom: 20px; line-height: 1.1; }
+        .concept-text p { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+        .concept-graphic { background: var(--senape); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 50px; }
+        
+        /* Onde astratte stile Mediterraneo */
+        .wave-graphic {
+            width: 100%; height: 100%;
+            background: repeating-radial-gradient( circle at 0 100%, transparent 0, transparent 20px, var(--inchiostro) 20px, var(--inchiostro) 23px, var(--terracotta) 23px, var(--terracotta) 43px, var(--inchiostro) 43px, var(--inchiostro) 46px );
+            opacity: 0.8;
         }
-        .concept-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 2; }
-        .concept-inner h2 { font-size: clamp(3rem, 7vw, 4.5rem); color: var(--limone); margin-bottom: 30px; line-height: 1.1; }
-        .concept-inner p { font-size: 1.15rem; font-weight: 400; line-height: 1.8; opacity: 0.9; }
 
-        .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-top: 60px; }
-        .pillar { padding: 30px 20px; border-top: 2px solid rgba(255,209,102,0.3); transition: transform 0.3s; }
-        .pillar:hover { transform: translateY(-10px); border-top-color: var(--bouganville); }
-        .pillar h4 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--arancia); margin-bottom: 15px; font-style: italic; }
-
-        /* ── ARTISTS ── */
-        .section-artists { padding: 120px 5%; background: var(--panna); }
-        .section-head { text-align: center; margin-bottom: 80px; }
-        .section-head h2 { font-size: clamp(3.5rem, 8vw, 5.5rem); color: var(--blu-capri); }
-        
-        .artist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; max-width: 1200px; margin: 0 auto; }
-        .artist-card { background: #fff; padding: 25px; box-shadow: 6px 6px 0px rgba(11, 57, 84, 0.08); border: 2px solid rgba(11, 57, 84, 0.05); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; }
-        .artist-card:hover { transform: translateY(-10px) rotate(-1deg); box-shadow: 12px 12px 0px rgba(11, 57, 84, 0.15); }
-        
-        .artist-photo { width: 100%; height: 350px; margin-bottom: 25px; background: var(--limone); border: 2px solid var(--blu-capri); }
-        .artist-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; filter: contrast(1.1) sepia(0.1); }
-        .artist-card:hover .artist-photo img { transform: scale(1.05); }
-        
-        .artist-info h3 { font-size: 2.2rem; color: var(--blu-capri); line-height: 1.2; margin: 15px 0; }
-        .artist-info p { font-size: 0.95rem; color: #555; margin-bottom: 20px; line-height: 1.7; }
-        
-        /* Card Colors */
-        .card-warmup .pill-tag { background: var(--arancia); }
-        .card-groove .pill-tag { background: var(--limone); color: var(--blu-capri); box-shadow: 3px 3px 0px var(--bouganville); }
-        .card-club .pill-tag { background: var(--bouganville); }
-
-        /* ── ROOTS (ORIGINI) ── */
-        .section-origini { padding: 120px 5%; background: var(--limone); color: var(--blu-capri); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-        .origini-inner { display: flex; flex-wrap: wrap; gap: 80px; max-width: 1100px; align-items: center; justify-content: space-between; position: relative; z-index: 2; }
-        .origini-text { flex: 1; min-width: 320px; }
-        .origini-text h2 { font-size: clamp(3.5rem, 7vw, 5.5rem); color: var(--bouganville); margin-bottom: 20px; line-height: 1; }
-        .origini-text p { font-size: 1.1rem; margin-bottom: 40px; font-weight: 700; }
-        
-        .origini-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
-        .origini-item { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--blu-capri); padding-bottom: 10px; }
-        .origini-city { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-style: italic; color: var(--blu-capri); }
-        .origini-name { font-weight: 800; font-size: 1rem; color: var(--bouganville); text-transform: uppercase; letter-spacing: 2px; }
-
-        .map-wrapper { flex: 1; min-width: 300px; display: flex; justify-content: center; }
-        .map-container { position: relative; width: 100%; max-width: 400px; }
-        .italy-svg { width: 100%; fill: var(--panna); stroke: var(--blu-capri); stroke-width: 2px; filter: drop-shadow(10px 10px 0px rgba(11, 57, 84, 0.15)); }
-        
-        .map-pin { position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .pin-dot { width: 16px; height: 16px; background: var(--bouganville); border-radius: 50%; box-shadow: 0 0 0 4px var(--blu-capri); animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239, 71, 111, 0.8); } 70% { box-shadow: 0 0 0 15px rgba(239, 71, 111, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 71, 111, 0); } }
-
-        /* ── MANIFESTO ── */
-        .section-manifesto { padding: 120px 5%; background: var(--panna); }
-        .manifesto-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-        @media (max-width: 800px) { .manifesto-inner { grid-template-columns: 1fr; gap: 50px; } }
-        
-        .manifesto-text h3 { font-size: clamp(3rem, 6vw, 4.5rem); color: var(--blu-capri); line-height: 1.1; margin-bottom: 30px; }
-        .manifesto-text h3 span { color: var(--arancia); font-style: italic; }
-        .manifesto-text p { font-size: 1.1rem; color: #555; margin-bottom: 20px; }
-        
-        .manifesto-traits { display: flex; flex-direction: column; gap: 30px; }
-        .manifesto-trait { background: #fff; padding: 30px; border-radius: 20px; box-shadow: 6px 6px 0px rgba(11, 57, 84, 0.05); border: 2px solid rgba(11,57,84,0.05); position: relative; overflow: hidden; transition: transform 0.2s; }
-        .manifesto-trait:hover { transform: translateX(10px); }
-        .manifesto-trait::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 8px; background: var(--azzurro); }
-        .manifesto-trait:nth-child(2)::before { background: var(--bouganville); }
-        .manifesto-trait:nth-child(3)::before { background: var(--limone); }
-        
-        .trait-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--blu-capri); margin-bottom: 10px; }
-
-        /* ── EVENTS & MEMORIES ── */
-        .section-events { padding: 120px 5%; background: var(--arancia); color: var(--panna); border-radius: 60px 60px 0 0; }
-        .section-events .section-head h2 { color: var(--panna); }
-        
-        .events-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; max-width: 1200px; margin: 0 auto; }
-        @media (max-width: 900px) { .events-grid { grid-template-columns: 1fr; } }
-        
-        .events-col h3 { font-size: 2.5rem; margin-bottom: 40px; font-style: italic; }
-        
-        .event-item { background: var(--panna); color: var(--blu-capri); padding: 30px; border-radius: 20px; margin-bottom: 25px; display: flex; gap: 25px; align-items: center; transition: transform 0.3s; box-shadow: 6px 6px 0px var(--blu-capri); border: 2px solid var(--blu-capri); }
-        .event-item:hover { transform: scale(1.02) rotate(1deg); }
-        .event-date { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--bouganville); line-height: 1; text-align: center; border-right: 2px solid rgba(11,57,84,0.1); padding-right: 25px; }
-        .event-name { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        
-        .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .gallery-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 100px 100px 10px 10px; transition: transform 0.4s; border: 2px solid var(--panna); box-shadow: 4px 4px 0px rgba(11,57,84,0.2); }
-        .gallery-img:hover { transform: translateY(-10px) rotate(-2deg); }
-
-        /* ── FOOTER ── */
-        footer { background: var(--blu-capri); color: var(--panna); text-align: center; padding: 120px 5% 60px; position: relative; border-top: 4px solid var(--bouganville); }
-        footer h2 { font-size: clamp(4rem, 12vw, 10rem); color: var(--limone); line-height: 0.8; margin-bottom: 50px; }
-        .contact-mail { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.8rem, 4vw, 3rem); color: var(--panna); text-decoration: none; position: relative; display: inline-block; }
-        .contact-mail::after { content: ''; position: absolute; width: 100%; height: 2px; bottom: 0; left: 0; background: var(--bouganville); transform: scaleX(0); transition: transform 0.3s; transform-origin: right; }
-        .contact-mail:hover::after { transform: scaleX(1); transform-origin: left; }
-        
-        .social-footer { margin-top: 60px; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-        .social-footer a { color: var(--arancia); font-weight: 800; text-decoration: none; text-transform: uppercase; letter-spacing: 2px; transition: color 0.3s; }
-        .social-footer a:hover { color: var(--panna); }
-        .footer-copy { margin-top: 80px; font-size: 0.8rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .menu-toggle { display: block; }
-            .nav-links { display: none; flex-direction: column; position: absolute; top: 75px; left: 0; width: 100%; background: rgba(250, 246, 240, 0.98); padding: 30px 0; text-align: center; border-bottom: 2px solid rgba(11, 57, 84, 0.1); }
-            .nav-links.active { display: flex; }
-            .hero { padding-top: 140px; }
-            .float-graphic { display: none; }
+        @media (max-width: 800px) { 
+            .concept-grid { grid-template-columns: 1fr; }
+            .concept-text { border-right: none; border-bottom: var(--border-thick); padding: 30px; }
         }
+
+        /* ── ARTISTI (Le Copertine 7") ── */
+        .section-artists { background: var(--ottanio); }
+        .section-artists .section-header h2 { color: var(--senape); }
+        .section-artists .section-label { color: var(--carta); }
+
+        .artist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1100px; margin: 0 auto; }
+        
+        .artist-card {
+            background: var(--carta); border: var(--border-thick);
+            box-shadow: var(--shadow-print); padding: 15px;
+            transition: transform 0.2s;
+        }
+        .artist-card:hover { transform: translate(-4px, -4px); box-shadow: 10px 10px 0px var(--inchiostro); }
+        
+        .artist-photo {
+            width: 100%; aspect-ratio: 1; border: var(--border-thick);
+            margin-bottom: 20px; position: relative; overflow: hidden;
+            background: var(--senape);
+        }
+        .artist-photo img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.3) contrast(1.2) saturate(1.2); mix-blend-mode: multiply; }
+        
+        /* Finto foro centrale del vinile sulla foto */
+        .artist-photo::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 25px; height: 25px;
+            background: var(--carta); border: 2px solid var(--inchiostro); border-radius: 50%;
+        }
+
+        .artist-info { text-align: center; padding-bottom: 10px; }
+        .artist-info h3 { font-family: 'Fugaz One', cursive; font-size: 1.8rem; color: var(--terracotta); margin: 10px 0; text-transform: uppercase; }
+        .artist-info p { font-size: 0.95rem; font-weight: 700; }
+
+        /* ── ROOTS (Mappa Astratta) ── */
+        .section-roots { background: var(--senape); }
+        .roots-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 1100px; margin: 0 auto; align-items: center; }
+        
+        .roots-list { border-top: var(--border-thick); margin-top: 30px; }
+        .roots-item {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: var(--border-thick); padding: 15px 0;
+        }
+        .roots-city { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--inchiostro); }
+        .roots-name { font-weight: 900; text-transform: uppercase; color: var(--terracotta); letter-spacing: 1px; }
+
+        .abstract-map {
+            width: 100%; aspect-ratio: 1; border: var(--border-thick);
+            background: var(--carta); border-radius: 200px 0 200px 0;
+            box-shadow: var(--shadow-print); display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        /* Mappa stilizzata geometrica */
+        .italy-shape { width: 60%; fill: var(--ottanio); stroke: var(--inchiostro); stroke-width: 3px; }
+
+        @media (max-width: 800px) { .roots-inner { grid-template-columns: 1fr; } }
+
+        /* ── MANIFESTO (Tipografia Brutalista/Retro) ── */
+        .section-manifesto { background: var(--carta); }
+        .manifesto-list { list-style: none; max-width: 900px; margin: 0 auto; }
+        .manifesto-item {
+            display: flex; gap: 30px; padding: 40px 0;
+            border-bottom: var(--border-thick);
+        }
+        .manifesto-item:first-child { border-top: var(--border-thick); }
+        
+        .m-num { font-family: 'Fugaz One', cursive; font-size: 4rem; color: var(--senape); text-shadow: 3px 3px 0 var(--inchiostro); line-height: 0.8; }
+        .m-text h4 { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--terracotta); margin-bottom: 10px; }
+        .m-text p { font-size: 1.1rem; font-weight: 700; }
+
+        @media (max-width: 600px) { .manifesto-item { flex-direction: column; gap: 10px; padding: 30px 0; } }
+
+        /* ── EVENTS E FOOTER ── */
+        .section-events { background: var(--terracotta); color: var(--carta); border-bottom: none; }
+        .section-events .section-header h2 { color: var(--carta); }
+        .section-events .section-label { color: var(--inchiostro); }
+
+        .event-card {
+            background: var(--carta); color: var(--inchiostro);
+            border: var(--border-thick); box-shadow: var(--shadow-print);
+            padding: 30px; display: flex; justify-content: space-between; align-items: center;
+            max-width: 800px; margin: 0 auto 20px;
+        }
+        .event-date { font-family: 'Fugaz One', cursive; font-size: 2.5rem; color: var(--ottanio); line-height: 1; text-align: center; padding-right: 30px; border-right: var(--border-thick); }
+        .event-details { flex: 1; padding-left: 30px; }
+        .event-details h3 { font-size: 1.8rem; margin-bottom: 5px; }
+        .event-details p { font-weight: 700; text-transform: uppercase; font-size: 0.9rem; }
+
+        footer {
+            background: var(--inchiostro); color: var(--carta);
+            padding: 80px 5% 40px; text-align: center;
+        }
+        .footer-logo { font-family: 'Fugaz One', cursive; font-size: 4rem; color: var(--senape); margin-bottom: 20px; display: block; }
+        .contact-link { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 2rem; color: var(--carta); text-decoration: none; border-bottom: 2px solid var(--terracotta); }
+        .footer-bottom { margin-top: 60px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--senape); }
+
     </style>
 </head>
 <body>
 
-<nav>
-    <a href="#" class="nav-logo">AMORE<span>.</span></a>
-    <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('active');">
-        <div></div><div></div><div></div>
-    </button>
-    <div class="nav-links">
-        <a href="#concept">The Sound</a>
-        <a href="#artisti">Artists</a>
-        <a href="#origini">Roots</a>
-        <a href="#manifesto">Manifesto</a>
-        <a href="#eventi">Events</a>
-    </div>
-</nav>
+<div class="noise-overlay"></div>
 
-<div class="marquee-container" style="margin-top: 75px;">
-    <div class="marquee-content">
-        LA DOLCE VITA ON THE DANCEFLOOR <span>·</span> NEAPOLITAN FUNK <span>·</span> ITALO DISCO <span>·</span> UNLIMITED SPRITZ <span>·</span> AMORE <span>·</span> LA DOLCE VITA ON THE DANCEFLOOR <span>·</span> NEAPOLITAN FUNK <span>·</span> ITALO DISCO <span>·</span> UNLIMITED SPRITZ <span>·</span> AMORE <span>·</span>
-    </div>
-</div>
+<div class="poster-frame">
 
-<header class="hero">
-    <div class="hero-arch"></div>
-    
-    <div class="float-graphic g1">
-        <svg width="70" height="70" viewBox="0 0 100 100" fill="var(--limone)">
-            <path d="M50 0 C50 40 60 50 100 50 C60 50 50 60 50 100 C50 60 40 50 0 50 C40 50 50 40 50 0 Z" />
-        </svg>
-    </div>
-    
-    <div class="float-graphic g2">
-        <svg width="110" height="110" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="48" fill="var(--blu-capri)" />
-            <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" />
-            <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" />
-            <circle cx="50" cy="50" r="16" fill="var(--arancia)" />
-            <circle cx="50" cy="50" r="4" fill="var(--panna)" />
-        </svg>
-    </div>
+    <nav>
+        <a href="#" class="nav-logo">AMORE</a>
+        <button class="menu-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('active');">
+            <div></div><div></div><div></div>
+        </button>
+        <div class="nav-links">
+            <a href="#concept">The Sound</a>
+            <a href="#artisti">Artists</a>
+            <a href="#origini">Roots</a>
+            <a href="#manifesto">Manifesto</a>
+        </div>
+    </nav>
 
-    <div class="float-graphic g3">
-        <svg width="80" height="30" viewBox="0 0 100 40" fill="none" stroke="var(--bouganville)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M10 20 Q 25 5, 40 20 T 70 20 T 100 20" />
-        </svg>
-    </div>
-
-    <div class="hero-content">
-        <h1>AMORE</h1>
-        <span class="hero-sub">The classic Italian afternoon.</span>
-        <span class="pill-tag" style="font-size: 1rem; padding: 12px 30px; margin-top: 20px;">Hamburg's Grooviest Fiesta</span>
-    </div>
-</header>
-
-<section id="concept" class="section-concept">
-    <div class="concept-inner">
-        <span class="pill-tag" style="background: var(--azzurro); color: var(--blu-capri); margin-bottom: 20px;">The Sound</span>
-        <h2>Italian groove.<br><span class="italic">Made to dance.</span></h2>
-        <p>Amore is a wild, vibrant slice of Mediterranean life bursting into unexpected spaces across Hamburg. We host high-energy gatherings rooted in a deep, curated love for the Italian sound—from Neapolitan funk to timeless Italo disco.</p>
-        <p style="margin-top: 20px;">We start with an elegant Aperitivo, but as the room heats up and the colors get louder, the energy explodes into a full-blown dancefloor. Chic, colorful, and made for people who seek genuine warmth and love to live fully.</p>
-        
-        <div class="pillars">
-            <div class="pillar">
-                <h4>The Records</h4>
-                <p>Italian vinyl, dug deep. Funk, disco, and heavy grooves that make you sweat with style.</p>
-            </div>
-            <div class="pillar">
-                <h4>The Places</h4>
-                <p>Elegant spaces transformed into surreal, festive Mediterranean escapes.</p>
-            </div>
-            <div class="pillar">
-                <h4>The Crowd</h4>
-                <p>Wild, beautiful souls. People who let loose but keep it classy.</p>
-            </div>
+    <div class="ticker">
+        <div class="ticker-content">
+            NEAPOLITAN FUNK · MEDITERRANEAN GROOVE · ITALIAN DISCO · THE CLASSIC AFTERNOON · NEAPOLITAN FUNK · MEDITERRANEAN GROOVE · ITALIAN DISCO · THE CLASSIC AFTERNOON ·
         </div>
     </div>
-</section>
 
-<section id="artisti" class="section-artists">
-    <div class="section-head">
-        <h2 class="italic">Who We Are</h2>
-    </div>
-    <div class="artist-grid">
-        <div class="artist-card arch-card card-warmup">
-            <div class="artist-photo arch-container"><img src="ale_und_ori.jpeg" alt="Ale und Ori" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600'" loading="lazy"></div>
-            <span class="pill-tag">Phase 1: L'Aperitivo</span>
-            <div class="artist-info">
-                <h3 class="serif">Ale und Ori</h3>
-                <p>Guitar and vocals for an acoustic journey through the great Italian classics. The perfect classy warm-up while the Spritz is poured.</p>
-            </div>
+    <header class="hero">
+        <div class="retro-sun"></div>
+        <div class="hero-content">
+            <span class="hero-sub">The Classic Italian Afternoon</span>
+            <h1>AM<span>O</span>RE</h1>
+            <span class="pill" style="font-size: 1rem; padding: 10px 25px; margin-top: 20px; background: var(--terracotta);">Hamburg, Germany</span>
         </div>
+    </header>
 
-        <div class="artist-card arch-card card-groove">
-            <div class="artist-photo arch-container"><img src="disco_kiosco.jpeg" alt="Disco Kiosco" onerror="this.src='https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?auto=format&fit=crop&q=80&w=600'" loading="lazy"></div>
-            <span class="pill-tag">Phase 2: Il Tramonto</span>
-            <div class="artist-info">
-                <h3 class="serif">Disco Kiosco</h3>
-                <p>A relentless dig through Neapolitan and Italian folk funk. The tempo rises, the colors pop, and the crowd starts to move.</p>
-            </div>
+    <section id="concept">
+        <div class="section-header">
+            <span class="section-label">The Vibe</span>
+            <h2>Italian groove.<br>Made to dance.</h2>
         </div>
-
-        <div class="artist-card arch-card card-club">
-            <div class="artist-photo arch-container"><img src="gab.jpeg" alt="GABA" onerror="this.src='https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&q=80&w=600'" loading="lazy"></div>
-            <span class="pill-tag">Phase 3: La Festa</span>
-            <div class="artist-info">
-                <h3 class="serif">GABA</h3>
-                <p>Taking the Italian groove and wiring it with heavy modern beats. Pure electronic euphoria to tear the roof off.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="origini" class="section-origini">
-    <div class="origini-inner">
-        <div class="origini-text">
-            <span class="pill-tag" style="background: var(--panna); color: var(--blu-capri); margin-bottom: 20px;">From North to South</span>
-            <h2 class="serif italic">Our Roots</h2>
-            <p>Four different backgrounds, one massive soul. We bring the chaotic, beautiful warmth of our hometowns into the heart of Northern Europe.</p>
-            <ul class="origini-list">
-                <li class="origini-item"><span class="origini-city">Udine</span><span class="origini-name">Ale</span></li>
-                <li class="origini-item"><span class="origini-city">Rome</span><span class="origini-name">Gab</span></li>
-                <li class="origini-item"><span class="origini-city">Naples</span><span class="origini-name">Ciccio</span></li>
-                <li class="origini-item"><span class="origini-city">Sicily</span><span class="origini-name">Oriana</span></li>
-            </ul>
-        </div>
-        <div class="map-wrapper">
-            <div class="map-container">
-                <svg class="italy-svg" viewBox="0 0 400 520" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 120 60 C 180 30, 250 40, 290 70 C 320 120, 290 180, 320 280 C 340 320, 360 360, 320 370 C 290 380, 310 380, 290 410 C 280 430, 250 460, 220 440 C 190 410, 250 350, 230 310 C 210 270, 180 250, 190 220 C 200 180, 130 140, 120 60 Z"/>
-                    <path d="M 170 460 C 210 440, 240 480, 200 510 C 150 510, 140 470, 170 460 Z"/>
-                    <path d="M 90 230 C 130 220, 140 290, 110 330 C 70 350, 50 260, 90 230 Z"/>
-                </svg>
-                <div class="map-pin" style="top:17%;left:60%;"><div class="pin-dot"></div></div>
-                <div class="map-pin" style="top:44%;left:60%;"><div class="pin-dot" style="background:var(--blu-capri);"></div></div>
-                <div class="map-pin" style="top:65%;left:58%;"><div class="pin-dot" style="background:var(--azzurro);"></div></div>
-                <div class="map-pin" style="top:92%;left:55%;"><div class="pin-dot" style="background:var(--arancia);"></div></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="manifesto" class="section-manifesto">
-    <div class="manifesto-inner">
-        <div class="manifesto-text">
-            <h3>Good music,<br><span>crazy people.</span></h3>
-            <p>We transform spaces. A room full of friends, massive speakers, colorful decor, and a DJ who knows how to make you sweat.</p>
-            <p>The music starts groovy—vintage funk, sunny anthems—and escalates into house, dance, and pure madness. No strict rules, just pure Amore.</p>
-        </div>
-        <div class="manifesto-traits">
-            <div class="manifesto-trait">
-                <div class="trait-title">From Funk to Madness</div>
-                <div class="trait-text">The journey is everything. We start with a vintage record and end up in a rave.</div>
-            </div>
-            <div class="manifesto-trait">
-                <div class="trait-title">Wild Spaces</div>
-                <div class="trait-text">Transformed courtyards, rooftops, and warehouses dressed up in color.</div>
-            </div>
-            <div class="manifesto-trait">
-                <div class="trait-title">Italian Music, All of It</div>
-                <div class="trait-text">Neapolitan disco, afrobeat, 80s synth, electronic—if it grooves and comes from Italy, we play it loud.</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="eventi" class="section-events">
-    <div class="section-head">
-        <h2 class="serif">Nights & Memories</h2>
-    </div>
-    <div class="events-grid">
-        <div class="events-col">
-            <h3 class="serif">Upcoming Madness</h3>
-            <div class="event-item">
-                <div class="event-date">12<br><span style="font-size: 1rem; color: var(--blu-capri); font-family: 'Syne', sans-serif; font-weight: 800;">JUN</span></div>
-                <div>
-                    <span class="event-name">Amore Festival</span>
-                    <span style="font-weight: 600; opacity: 0.8;">Salotto Cafe', Hamburg</span>
-                    <p style="font-size: 0.8rem; font-weight: 800; margin-top: 5px; color: var(--bouganville);">Limited spots · Dress Colorful</p>
+        <div class="concept-grid">
+            <div class="concept-text">
+                <h3>Amore is a wild, vibrant slice of Mediterranean life bursting into Hamburg.</h3>
+                <p>Part aperitivo, part disco-funk fiesta, rooted in curated Italian sound—from Neapolitan funk to timeless Italo disco.</p>
+                <p>It’s a colorful escape, unpretentious, loud, and full of life, made for genuine warmth and people who love to live fully. The classic Italian afternoon, transformed.</p>
+                <div style="margin-top: 30px;">
+                    <span class="pill">Vinyl Records</span>
+                    <span class="pill">Hidden Spaces</span>
+                    <span class="pill">Good People</span>
                 </div>
             </div>
-        </div>
-        <div class="events-col">
-            <h3 class="serif">Past Grooves</h3>
-            <div class="gallery">
-                <img src="salotto.jpeg" class="gallery-img" alt="Party vibe" onerror="this.src='https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=400'" loading="lazy">
-                <img src="IMG_4979.JPG" class="gallery-img" alt="Dancing crowd" onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=400'" loading="lazy">
-                <img src="park.jpeg" class="gallery-img" alt="Disco ball" onerror="this.src='https://images.unsplash.com/photo-1563841930606-67e2bce48b78?auto=format&fit=crop&q=80&w=400'" loading="lazy">
-                <img src="park_2.jpeg" class="gallery-img" alt="DJ playing" onerror="this.src='https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=400'" loading="lazy">
+            <div class="concept-graphic">
+                <div class="wave-graphic"></div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<div class="marquee-container">
-    <div class="marquee-content" style="color: var(--panna); background: var(--blu-capri);">
-        FEEL THE GROOVE <span>·</span> CIAO BELLA <span>·</span> DISCOTECA <span>·</span> LET THE MUSIC PLAY <span>·</span> FEEL THE GROOVE <span>·</span> CIAO BELLA <span>·</span> DISCOTECA <span>·</span> LET THE MUSIC PLAY <span>·</span>
-    </div>
-</div>
+    <section id="artisti" class="section-artists">
+        <div class="section-header">
+            <span class="section-label">The Projects</span>
+            <h2>Artist Roots</h2>
+        </div>
+        <div class="artist-grid">
+            
+            <div class="artist-card">
+                <div class="artist-photo">
+                    <img src="ale_und_ori.jpeg" alt="Ale und Ori" onerror="this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=600'">
+                </div>
+                <div class="artist-info">
+                    <span class="pill" style="background: var(--terracotta);">Phase 1</span>
+                    <h3>Ale und Ori</h3>
+                    <p>Acoustic journey through great Italian classics. The warm-up while the Spritz is poured.</p>
+                </div>
+            </div>
 
-<footer id="contatti">
-    <h2 class="serif">Amore.</h2>
-    <a href="mailto:ciao@amore-afternoon.com" class="contact-mail">ciao@amore-afternoon.com</a>
-    <div class="social-footer">
-        <a href="#">Instagram</a>
-        <a href="#">Soundcloud</a>
-    </div>
-    <p class="footer-copy">© 2026 AMORE · From Italy to Hamburg with chaos and love</p>
-</footer>
+            <div class="artist-card">
+                <div class="artist-photo">
+                    <img src="disco_kiosco.jpeg" alt="Disco Kiosco" onerror="this.src='https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?auto=format&fit=crop&q=80&w=600'">
+                </div>
+                <div class="artist-info">
+                    <span class="pill" style="background: var(--ottanio);">Phase 2</span>
+                    <h3>Disco Kiosco</h3>
+                    <p>Relentless dig through Neapolitan funk. The tempo rises and the crowd starts to move.</p>
+                </div>
+            </div>
 
+            <div class="artist-card">
+                <div class="artist-photo">
+                    <img src="gab.jpeg" alt="GABA" onerror="this.src='https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&q=80&w=600'">
+                </div>
+                <div class="artist-info">
+                    <span class="pill" style="background: var(--senape); color: var(--inchiostro);">Phase 3</span>
+                    <h3>GABA</h3>
+                    <p>Taking the Italian groove and wiring it with heavy modern beats. Pure electronic euphoria.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="origini" class="section-roots">
+        <div class="roots-inner">
+            <div>
+                <span class="section-label" style="color: var(--inchiostro);">From North to South</span>
+                <h2 style="font-size: clamp(3rem, 6vw, 4.5rem); margin-bottom: 20px;">Our Origins</h2>
+                <p style="font-size: 1.1rem; font-weight: 700;">Four different backgrounds, one massive soul. Bringing the chaotic, beautiful warmth of our hometowns into the heart of Northern Europe.</p>
+                
+                <div class="roots-list">
+                    <div class="roots-item"><span class="roots-city">Udine</span><span class="roots-name">Ale</span></div>
+                    <div class="roots-item"><span class="roots-city">Roma</span><span class="roots-name">Gab</span></div>
+                    <div class="roots-item"><span class="roots-city">Napoli</span><span class="roots-name">Ciccio</span></div>
+                    <div class="roots-item"><span class="roots-city">Sicilia</span><span class="roots-name">Oriana</span></div>
+                </div>
+            </div>
+            
+            <div class="abstract-map">
+                <svg class="italy-shape" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 10 L40 15 L50 30 L45 50 L60 80 L70 90 L60 100 L40 110 L30 90 L40 70 L35 50 L20 40 L15 20 Z" />
+                    <polygon points="10,80 25,85 20,95 5,90" fill="var(--terracotta)" stroke="var(--inchiostro)" stroke-width="3"/>
+                    <circle cx="20" cy="60" r="5" fill="var(--senape)" stroke="var(--inchiostro)" stroke-width="3"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section id="manifesto" class="section-manifesto">
+        <div class="section-header">
+            <span class="section-label">How we do it</span>
+            <h2>Manifesto</h2>
+        </div>
+        <ul class="manifesto-list">
+            <li class="manifesto-item">
+                <div class="m-num">1</div>
+                <div class="m-text">
+                    <h4>From Funk to Madness</h4>
+                    <p>The journey is everything. We start with a vintage vinyl record and end up somewhere completely unexpected. A crescendo of groove.</p>
+                </div>
+            </li>
+            <li class="manifesto-item">
+                <div class="m-num">2</div>
+                <div class="m-text">
+                    <h4>Unusual Spaces</h4>
+                    <p>We transform ordinary places. Courtyards, kiosks, and cafes dressed up in color, becoming temporary Mediterranean escapes.</p>
+                </div>
+            </li>
+            <li class="manifesto-item">
+                <div class="m-num">3</div>
+                <div class="m-text">
+                    <h4>Italian Music, Period.</h4>
+                    <p>Neapolitan disco, afrobeat, 70s library music, electronic—if it has soul, grooves hard, and comes from Italy, we play it loud.</p>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <section id="eventi" class="section-events">
+        <div class="section-header">
+            <span class="section-label">Live</span>
+            <h2>Upcoming Fiesta</h2>
+        </div>
+        
+        <div class="event-card">
+            <div class="event-date">12<br><span style="font-size: 1.2rem;">JUN</span></div>
+            <div class="event-details">
+                <h3>Amore Festival</h3>
+                <p style="color: var(--terracotta);">Salotto Cafe', Hamburg</p>
+                <p style="margin-top: 10px; opacity: 0.7;">Limited Spots · Disco Attire</p>
+            </div>
+            <span class="pill" style="background: var(--terracotta); align-self: flex-start;">RSVP</span>
+        </div>
+    </section>
+
+    <footer>
+        <span class="footer-logo">AMORE</span>
+        <a href="mailto:ciao@amore-afternoon.com" class="contact-link">ciao@amore-afternoon.com</a>
+        <div class="footer-bottom">
+            © 2026 AMORE · From Italy to Hamburg with funk.
+        </div>
+    </footer>
+
+</div> <script>
+    // Semplice menu mobile
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+        const links = document.querySelector('.nav-links');
+        if (links.style.display === 'flex') {
+            links.style.display = 'none';
+        } else {
+            links.style.display = 'flex';
+            links.style.flexDirection = 'column';
+            links.style.position = 'absolute';
+            links.style.top = '100%';
+            links.style.left = '0';
+            links.style.width = '100%';
+            links.style.background = 'var(--carta)';
+            links.style.padding = '20px 0';
+            links.style.textAlign = 'center';
+            links.style.borderBottom = '3px solid var(--inchiostro)';
+            links.style.zIndex = '90';
+        }
+    });
+</script>
 </body>
 </html>
